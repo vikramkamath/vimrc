@@ -18,6 +18,14 @@ nmap <leader>w :w!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
+" Always show tabs
+set showtabline=2
+" Max show 15 tabs
+set tabpagemax=15
+" Show mode
+set showmode
+" Show partial commands in status and selected characters/lines in visual mode
+set showcmd
 " Show number line
 set nu
 " Turn on the WiLd menu
