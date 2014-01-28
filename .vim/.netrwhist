@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/vikram'
+let g:netrw_dirhist_2='/home/vikram/Code/gitrepos/rails_projects/demo_app'
+let g:netrw_dirhist_3='/home/vikram/Code/gitrepos/rails_projects/demo_app/app'
+let g:netrw_dirhist_4='/home/vikram/Code/gitrepos/rails_projects/demo_app/app/controllers'
+let g:netrw_dirhist_5='/home/vikram/Code/gitrepos/rails_projects/demo_app/spec/requests'
+let g:netrw_dirhist_6='/home/vikram/Code/gitrepos/rails_projects/demo_app/app/views/static_pages'
+let g:netrw_dirhist_7='/home/vikram/Code/gitrepos/rails_projects/demo_app/app/views'
+let g:netrw_dirhist_8='/home/vikram/Code/gitrepos/rails_projects/demo_app/app'
+let g:netrw_dirhist_9='/home/vikram/Code/gitrepos/rails_projects/demo_app'

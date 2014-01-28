@@ -1,6 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
 " Sets how many lines of history VIM has to remember
 set history=700
 " Enable filetype plugins
@@ -67,8 +68,12 @@ set tm=500
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable
-colorscheme desert
 set background=dark
+" colorscheme solarized 
+set t_Co=256
+" let g:solarized_termcolors=256
+ let g:molokai_original = 1
+ let g:rehash256 = 1
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 " Use Unix as the standard file type
@@ -85,11 +90,11 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
-" Be smart when using tabs ;)
+" Be smart when using tabs 
 set smarttab
 " 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 " Linebreak on 500 characters
 set lbr
 set tw=500
@@ -130,7 +135,7 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 map <leader>pp :setlocal paste!<cr>
 " Show hidden chars
 set list
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:+
 """"""""""""""""""""""""""""""""
 " => Helper Functions
 """"""""""""""""""""""""""""""""
@@ -141,3 +146,13 @@ function! HasPaste()
     en
     return ''
 endfunction
+"""""""""""""""""""""""""""""""
+" => Pathogen
+"""""""""""""""""""""""""""""""
+execute pathogen#infect()
+
+"""""""""""""""""""""""""""""""
+" => Pathogen based plugins
+"""""""""""""""""""""""""""""""
+map <leader>nn :NERDTreeToggle<cr>
+autocmd vimenter * if !argc() | NERDTree | endif
