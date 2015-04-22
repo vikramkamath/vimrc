@@ -1,10 +1,33 @@
-" => General {{{
 set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'scroolose/syntastic'
+
+Plugin 'airblade/vim-gitgutter'
+
+Plugin 'bling/vim-airline'
+
+Plugin 'kien/ctrlp.vim'
+
+Plugin 'edsono/vim-matchit'
+
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+Plugin 'scrooloose/nerdcommenter'
+call vundle#end()
+filetype plugin indent on
+"  General {{{ 
 " Sets how many lines of history VIM has to remember
 set history=700
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
 " Set to auto read when a file is changed from the outside
 set autoread
 " With a map leader it's possible to do extra key combinations
@@ -12,8 +35,8 @@ set autoread
 let mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
-"}}}
-" => VIM user interface{{{
+" }}}
+"  VIM user interface{{{
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 " Always show tabs
@@ -30,7 +53,7 @@ set nu
 set wildmenu
 set wildmode=list:longest
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildignore=*.o,*~,*.pyc,*/tmp/*,*.so,*.swp,*.zip
 "Always show current position
 set ruler
 " Height of the command bar
@@ -60,16 +83,15 @@ set mat=2
 set noerrorbells
 set novisualbell
 set t_vb=
-set tm=500
+set tm=2000
 " default add g
 set gdefault
 " send more chars at given time
 set ttyfast
 " Window title bar shows filename
 set title
-"}}}
-" => Code Folding{{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+"  Code Folding{{{
 " Keep all folds closed by default
 " set foldlevelstart=0
 " Fold toggling
@@ -84,31 +106,29 @@ augroup filetype_ruby
   autocmd!
   autocmd FileType ruby setlocal foldmethod=syntax
 augroup END
-"}}}
-" => Colors and Fonts{{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+"  Colors and Fonts{{{
 " Enable syntax highlighting
-syntax enable
-set background=dark
+syntax on
+" set background=dark
 " colorscheme solarized 
 set t_Co=256
 " let g:solarized_termcolors=256
-let g:molokai_original = 1
-let g:rehash256 = 1
+colorscheme desert
+" let g:molokai_original = 1
+" let g:rehash256 = 1
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 " Use Unix as the standard file type
-set ffs=unix,dos,mac
-"}}}
-" => Files, backups and undo{{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set ffs=unix,mac,dos
+" }}}
+"  Files, backups and undo{{{
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
 set noswapfile
-"}}}
-" => Text, tab and indent related{{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+"  Text, tab and indent related{{{
 " Use spaces instead of tabs
 set expandtab
 " Be smart when using tabs 
@@ -122,9 +142,11 @@ set tw=500
 set ai "Auto indent
 " set si "Smart indent
 set wrap "Wrap lines
-"}}}
-" => Moving around, tabs, windows and buffers{{{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+"  Moving around, tabs, windows and buffers{{{
+" Horizontal Split and Unsplit 
+map <leader>! :on<cr>
+map <leader>@ :vsplit ea<cr>
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 " Smart way to move between windows
@@ -142,22 +164,20 @@ autocmd BufReadPost *
       \ if line("'\"") > 0 && line("'\"") <= line("$") |
       \   exe "normal! g`\"" |
       \ endif
-"}}}
-" => Status line{{{
-""""""""""""""""""""""""""""""
+" }}}
+"  Status line{{{
 " Always show the status line
 set laststatus=2
 " Format the status line
 " set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
-"}}}
-" => Miscellanous{{{
+" set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
+" }}}
+"  Miscellanous{{{
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 " Show hidden chars
 set list
-" set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:+
-set lcs=tab:›\ ,trail:·,eol:¬,nbsp:_
+set lcs=tab:›\ ,trail:•,eol:¬,nbsp:.
 " Remap :W to :w
 command W w
 " Faster split resizing
@@ -165,8 +185,8 @@ if bufwinnr(1)
   map + <C-W>+
   map - <C-W>-
 endif
-"}}}
-" => Helper Functions{{{
+" }}}
+"  Helper Functions{{{
 " Returns true if paste mode is enabled
 function! HasPaste()
   if &paste
@@ -174,11 +194,49 @@ function! HasPaste()
   en
   return ''
 endfunction
-"}}}
-" => Pathogen{{{
-execute pathogen#infect()
-"}}}
-" => Pathogen based plugins{{{
-map <leader>nn :NERDTreeToggle<cr>
-autocmd vimenter * if !argc() | NERDTree | endif
-"}}}
+" }}}
+"  vim-airline settings{{{
+let g:airline_powerline_fonts = 1
+
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+" }}}
+"  ctrlp settings{{{
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = '\v[\/].(git|hg|svn)$'
+let g:ctrlp_user_command = 'find %s -type f'
+"  }}}
+"  syntastic settings{{{
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"  JS
+let g:syntastic_javascript_checkers = ['jshint']
+"  }}}
+"  gitgutter settings{{{
+let g:gitgutter_sign_column_always = 1
+"  }}}
+
